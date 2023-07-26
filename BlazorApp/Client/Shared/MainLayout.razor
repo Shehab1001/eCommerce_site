@@ -1,0 +1,137 @@
+﻿@inherits LayoutComponentBase
+
+@*<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4 auth">
+            <LoginDisplay />
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>*@
+
+<MudAppBar Elevation="5" Color="Color.Secondary">
+    <MudTooltip Text="Toggle Drawer">
+        <MudIconButton Icon="@Icons.Rounded.Notes" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+    </MudTooltip>
+
+    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+        <MudButton Variant="Variant.Text"  DisableElevation="true" Link="./" Class="app-title">
+            eShop
+        </MudButton>
+        <MudSpacer />
+        @*<LanguageSelector />*@
+        <EnvironmentChip/>
+        <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-5" />
+
+        @*<NotificationBell NewNotificationsExist="@NewNotificationsExist" />*@
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+            <MudButton Variant="Variant.Text" DisableElevation="true" Link="./" Class="app-title">
+            eShop
+        </MudButton>
+        <MudSpacer />
+            @*<NotificationBell NewNotificationsExist="@NewNotificationsExist" />*@
+    </MudHidden>
+    <MudMenu  LockScroll="true">
+        <ActivatorContent>
+            <MudTooltip Text="User Settings">
+                <MudIconButton Icon="@Icons.Filled.Person" Color="Color.Inherit" />
+            </MudTooltip>
+        </ActivatorContent>
+        <ChildContent>
+            <div class="py-2" style="min-width: 220px">
+                <PersonCard Class="mt-n2" Style="margin-bottom:0px!important" />
+                <MudMenuItem >
+                    <div class="d-flex">
+                        <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Person" />
+                        <MudText>Edit Profile</MudText>
+                    </div>
+                </MudMenuItem>
+                <MudMenuItem Href="preferences">
+                    <div class="d-flex">
+                        <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.DisplaySettings" />
+                        <MudText>"Edit Preferences</MudText>
+                    </div>
+                </MudMenuItem>
+
+                <MudDivider DividerType="DividerType.Middle" Style=" background-color: lightgray" />
+                    <MudMenuItem >
+                    <div class="d-flex">
+                       @* <MudIcon Class="mx-2" Icon="@Icons.Material.Filled.Logout" />
+                        <MudText>@Loc["Logout"]</MudText>*@
+                            <MudButton Color="Color.Error" FullWidth="true" StartIcon="@Icons.Material.Filled.Logout"
+                                   Variant="Variant.Filled" >
+                                Logout
+                            </MudButton>
+                    </div>
+                </MudMenuItem>
+
+            </div>
+        </ChildContent>
+    </MudMenu>
+
+    <LoginDisplay />
+
+</MudAppBar>
+
+@*<MudOverlay LightBackground="true" Visible="true" Absolute="true" LockScroll="true"/>*@
+
+<MudDrawer @bind-Open="@open"
+    Elevation="25" ClipMode="DrawerClipMode.Never" Width="300px">
+
+@*    <PersonCard Style="background-color: var(--mud-palette-drawer-background);color: var(--mud-palette-drawer-text); margin-bottom:0px!important" />
+*@
+    <MudDrawerContainer>
+
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">eShope</MudText>
+        </MudDrawerHeader>
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
+            <MudNavLink Href="/products" Match="NavLinkMatch.All">Products</MudNavLink>
+            <MudNavLink Href="/" Match="NavLinkMatch.All">Shopping Cart</MudNavLink>
+            <MudNavLink Href="/" Match="NavLinkMatch.All">Checkout</MudNavLink>
+        </MudNavMenu>
+
+    </MudDrawerContainer>
+
+</MudDrawer>
+
+
+
+<MudMainContent>
+    <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
+
+       @* <NavigationContainer @ref="_navigationContainer">*@
+            @Body
+       @* </NavigationContainer>*@
+
+        <span Class="d-flex flex-row  justify-end">
+            <MudScrollToTop TopOffset="400">
+                <MudFab Icon="fa-solid fa-chevron-up" VisibleCssClass="visible absolute"
+                        HiddenCssClass="invisible" Class="scroll-top-fab" />
+            </MudScrollToTop>
+        </span>
+
+    </MudContainer>
+</MudMainContent>
+
+@code   
+{
+    bool open = false;
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    }
+}
+
+

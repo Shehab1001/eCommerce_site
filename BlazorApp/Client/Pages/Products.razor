@@ -1,0 +1,124 @@
+﻿@using System.Text.Json;
+@using BlazorApp.Shared.Entities;
+@using Microsoft.AspNetCore.Authorization;
+@using System.Globalization;
+
+@page "/products"
+@inject IHttpClientFactory ClientFactory
+@attribute [Authorize]
+
+<h3>Products</h3>
+
+<MudPaper Class="pa-4">
+    <MudStack Row="true" Spacing="4">
+        <MudTextField @bind-Value="ProductName" Label="Product Name" Variant="Variant.Outlined" />
+@*        <MudTextField @bind-Value="ProductType"  Label="Product Type" Variant="Variant.Outlined" />
+*@        
+        <MudSelect @bind-Value="ProductType" T="string" Label="Product Type" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+            <MudSelectItem Value=@("Electronics") />
+            <MudSelectItem Value=@("Fashion") />
+            <MudSelectItem Value=@("Grocery") />
+            <MudSelectItem Value=@("Toys & Games") />
+        </MudSelect>
+        <MudTextField @bind-Value="PriceFrom"  Label="Price From" Variant="Variant.Outlined" />
+        <MudTextField @bind-Value="PriceTo"  Label="Price To" Variant="Variant.Outlined" />
+
+        <MudButton OnClick="GetProductsList" StartIcon="@Icons.Material.Filled.Filter" Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true">Fillter</MudButton>
+    </MudStack>
+</MudPaper>
+
+@if (ProductList !=null)
+{
+    <MudPaper Class="pa-4">
+    <MudGrid Spacing="10" Justify="Justify.SpaceEvenly">
+
+        @foreach(var product in ProductList)
+        {
+            <MudItem>
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderAvatar>
+                            <MudAvatar Color="Color.Secondary">@product.Name.Substring(0,1)</MudAvatar>
+                        </CardHeaderAvatar>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.body1">@product.Name</MudText>
+                            <MudText Typo="Typo.body2">@string.Format(new CultureInfo("ar-EG", false), "{0:c0}", product.Price)</MudText>
+                        </CardHeaderContent>
+@*                        <CardHeaderActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                        </CardHeaderActions>*@
+                    </MudCardHeader>
+                    <MudImage ObjectFit="@ObjectFit.ScaleDown" Height="250" Width="250" Src="@product.PictureUri" Alt="@product.Name" Elevation="25" Class="rounded-lg" />
+@*                    <MudCardMedia Image="@product.PictureUri" Height="250"/>
+*@                    <MudCardContent>
+                        <MudText Typo="Typo.body2">@product.Description</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.AddShoppingCart" Color="Color.Default"/>
+                        <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Default" />
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+        @*        <MudItem>
+            <MudPaper Height="250px" Width="250px" />
+        </MudItem>
+        <MudItem>
+            <MudPaper Height="250px" Width="250px" />
+        </MudItem>*@
+    </MudGrid>
+    </MudPaper>
+}
+else
+{
+    <p>Unable to get products. Please try again later.</p>
+}
+
+@code {
+
+    public List<Product> ProductList { get; set; } = new List<Product>();
+    public string? ProductName { get; set; }
+    public string? ProductType { get; set; }
+    public decimal? PriceFrom { get; set; }
+    public decimal? PriceTo { get; set; }
+
+    private async Task GetProductsList()
+    {
+        var client = ClientFactory.CreateClient("InventoryService");
+
+        string filterParametersStr = "?";
+        if (!string.IsNullOrWhiteSpace(ProductName))
+        {
+            filterParametersStr += $"ProductName={ProductName}&";
+        }
+        if (!string.IsNullOrWhiteSpace(ProductType))
+        {
+            filterParametersStr += $"ProductType={ProductType}&";
+        }
+        if (PriceFrom.HasValue)
+        {
+            filterParametersStr += $"PriceFrom={PriceFrom}&";
+        }
+        if (PriceTo.HasValue)
+        {
+            filterParametersStr += $"PriceTo={PriceTo}";
+        }
+
+        var response = await client.GetAsync("products"+filterParametersStr);
+        var content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException(content);
+        }
+        ProductList = JsonSerializer.Deserialize<List<Product>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProductName = null;
+        ProductType = null;
+        PriceFrom = null;
+        PriceTo = null;
+        await GetProductsList();
+    }
+}

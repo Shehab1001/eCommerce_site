@@ -1,0 +1,12 @@
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\bin\Debug\net7.0\BlazorApp.Shared.deps.json
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\bin\Debug\net7.0\BlazorApp.Shared.dll
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\bin\Debug\net7.0\BlazorApp.Shared.pdb
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\BlazorApp.Shared.csproj.AssemblyReference.cache
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\BlazorApp.Shared.GeneratedMSBuildEditorConfig.editorconfig
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\BlazorApp.Shared.AssemblyInfoInputs.cache
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\BlazorApp.Shared.AssemblyInfo.cs
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\BlazorApp.Shared.csproj.CoreCompileInputs.cache
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\BlazorApp.Shared.dll
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\refint\BlazorApp.Shared.dll
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\BlazorApp.Shared.pdb
+S:\SIM\6th Semister\eShop\eShop\BlazorApp\Shared\obj\Debug\net7.0\ref\BlazorApp.Shared.dll

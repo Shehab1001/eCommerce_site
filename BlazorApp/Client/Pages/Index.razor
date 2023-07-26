@@ -1,0 +1,30 @@
+﻿@page "/"
+
+<PageTitle>eShop</PageTitle>
+
+<h1>Welcome to eShop</h1>
+
+It's an eCommerce solution built on modern web technologies and microservices architecture.
+
+<SurveyPrompt Title="Please login to browse eShop products." />
+
+<MudCarousel Class="mud-width-full" Style="height:600px;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="@true" AutoCycle="true" TData="object">
+    <MudCarouselItem Transition="@Transition.Slide" Color="@Color.Primary">
+        <div class="d-flex" style="height:100%">
+            <MudImage Class="mx-auto my-auto rounded-lg" Src="https://static.vecteezy.com/system/resources/previews/003/692/287/original/big-sale-discount-promotion-banner-template-with-blank-product-podium-scene-graphic-free-vector.jpg" Elevation="25" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="@Transition.Slide" Color="@Color.Secondary">
+        <div class="d-flex" style="height:100%">
+            <MudImage Class="mx-auto my-auto rounded-lg" Src="https://static.toiimg.com/thumb/msid-86709670,width-400,resizemode-4/86709670.jpg" Elevation="25" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="@Transition.Slide">
+        <div class="d-flex" style="height:100%">
+            <MudImage Class="mx-auto my-auto rounded-lg" Src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH8-6knJbeKk-wRqnyXBF6fNZQkbootiOWpA&usqp=CAU" Elevation="25" />
+        </div>
+    </MudCarouselItem>
+</MudCarousel>
+
+
+
